@@ -10,36 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_23_065649) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_013755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "roadmaps", force: :cascade do |t|
+  create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.integer "progress_percentage"
-    t.date "target_date"
-    t.string "title"
+    t.string "description", null: false
+    t.bigint "roadmap_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_roadmaps_on_user_id"
+    t.index ["roadmap_id"], name: "index_activities_on_roadmap_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "roadmaps", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "duration", null: false
+    t.integer "status", default: 0, null: false
+    t.date "target_date", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "content"
+    t.string "content", null: false
     t.datetime "created_at", null: false
-    t.boolean "is_completed"
+    t.date "due_date"
+    t.boolean "is_completed", default: false, null: false
     t.bigint "roadmap_id", null: false
     t.datetime "updated_at", null: false
     t.index ["roadmap_id"], name: "index_tasks_on_roadmap_id"
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "avatar_url"
     t.datetime "created_at", null: false
-    t.string "email"
-    t.string "name"
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.datetime "updated_at", null: false
+    t.string "username", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "roadmaps", "users"
+  add_foreign_key "activities", "roadmaps"
+  add_foreign_key "activities", "users"
   add_foreign_key "tasks", "roadmaps"
 end

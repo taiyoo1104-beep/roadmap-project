@@ -1,7 +1,9 @@
 class Api::V1::RoadmapsController < ApplicationController
   def index
-    # 全てのロードマップをタスクと一緒に取得してJSON形式で返す
-    @roadmaps = Roadmap.all
-    render json: @roadmaps.as_json(include: :tasks)
+    # すべてのロードマップを、関連するタスクと一緒に取得（includesで高速化）
+    @roadmaps = Roadmap.includes(:tasks).all
+    
+    # JSONにタスク情報を含めて返す
+    render json: @roadmaps, include: :tasks
   end
 end
