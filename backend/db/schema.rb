@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_013755) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_062812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,10 +25,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_013755) do
   end
 
   create_table "roadmaps", force: :cascade do |t|
+    t.string "category"
     t.datetime "created_at", null: false
+    t.text "description"
     t.integer "duration", null: false
     t.integer "status", default: 0, null: false
     t.date "target_date", null: false
+    t.string "target_level"
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
@@ -48,10 +51,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_013755) do
     t.string "avatar_url"
     t.datetime "created_at", null: false
     t.string "email", null: false
-    t.string "password_digest", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "jti"
     t.datetime "updated_at", null: false
     t.string "username", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti"
   end
 
   add_foreign_key "activities", "roadmaps"

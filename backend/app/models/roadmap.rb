@@ -1,4 +1,6 @@
 class Roadmap < ApplicationRecord
-  belongs_to :user  # これを追加
-  has_many :tasks, dependent: :destroy # 今後のためにタスクとの関係も追加
+  belongs_to :user
+  has_many :tasks, dependent: :destroy
+
+  accepts_nested_attributes_for :tasks, allow_destroy: true
 end

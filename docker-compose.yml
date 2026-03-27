@@ -18,6 +18,9 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/backend_development
     depends_on:
       - db
+    env_file:
+      - ./backend/.env
+      
 
   frontend:
     build: ./frontend
