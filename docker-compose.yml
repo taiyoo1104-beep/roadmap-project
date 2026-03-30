@@ -8,7 +8,6 @@ services:
 
   backend:
     build: ./backend
-    # 開発時は Dockerfile の CMD を上書きして、常に最新のコードで実行
     command: bin/rails server -b 0.0.0.0
     volumes:
       - ./backend:/rails
@@ -20,15 +19,14 @@ services:
       - db
     env_file:
       - ./backend/.env
-      
 
+  # 👇 ここ！ services の下にスペース2つ入れて、db や backend と縦を揃えます
   frontend:
     build: ./frontend
     volumes:
       - ./frontend:/app
-      # コンテナ内の node_modules をホスト側で上書きしないための設定
       - /app/node_modules
     ports:
-      - "5173:5173"
-    depends_on:
-      - backend
+      - "3001:3000" # ホスト(3001) -> コンテナ(3000)
+    environment:
+      - WATCHPACK_POLLING=true

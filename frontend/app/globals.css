@@ -1,0 +1,14 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+/* 以前の body スタイルを v4 形式で記述 */
+@theme {
+  /* ここにカスタム設定を書けますが、標準色は自動で読み込まれます */
+}
+
+/* @apply を使う場合は、@import "tailwindcss"; の後であれば
+  bg-slate-950 などを認識できるようになります。
+*/
+body {
+  @apply bg-slate-950 text-white;
+}

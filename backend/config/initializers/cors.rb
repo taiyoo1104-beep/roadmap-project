@@ -1,9 +1,10 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://localhost:5173" # React(Vite)のデフォルトURL
+    origins "http://localhost:3001" # React(Vite)のデフォルトURL
 
     resource "*",
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      expose: ['Authorization']
   end
 end
